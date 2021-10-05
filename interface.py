@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from prediction import Predict
 from converter import Converter
+import pandas as pd
 
 
 class App:
@@ -77,6 +78,11 @@ class App:
             predict_cur_result = self.cur_obj.get_prediction(get_select)
         except ValueError:
             self.lb_predict.insert(END, "Нет информации о валюте")
+            df = pd.read_csv('file1.csv', delimiter=',')
+            print(get_select)
+            df = df.loc[df['EngName'] != get_select]
+            df = df.drop('Unnamed: 0', axis=1)
+            df.to_csv('file1.csv')
             return
         self.lb_predict.insert(END, str(predict_cur_result))
 
